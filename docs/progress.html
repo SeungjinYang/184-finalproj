@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<style>
+  body {
+    padding: 100px;
+    width: 1000px;
+    margin: auto;
+    text-align: left;
+    font-weight: 300;
+    font-family: 'Open Sans', sans-serif;
+    color: #121212;
+  }
+  h1, h2, h3, h4 {
+    font-family: 'Source Sans Pro', sans-serif;
+  }
+</style>
+<title>CS 184 Milestone Report</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Sans+Pro" rel="stylesheet">
+</head>
+
+
+<body>
+
+<h1 align="middle">CS 184: Computer Graphics and Imaging, Spring 2019</h1>
+<h1 align="middle">Final Project: Light Field Camera</h1>
+<h1 align="middle">Milestone Webpage</h1>
+<h2 align="middle">Amanda Nicole, Brendan Sweeney, Seung Jin Yang</h2>
+
+<br>
+
+<div>
+
+<h2 align="middle">Accomplishments and Preliminary Results</h2>
+
+
+<h3 align="middle">Generating Sub-aperture Images:</h3>
+
+<p>We successfully rendered sub-aperture images by modifying project 3 code, which we exported as a .png image. Since each sub-aperture image can be thought of as pinhole camera images taken at a certain lateral offset from the “center”, the program was modified to take in additional arguments that will shift the camera position relative to the camera setting file argument. With this modification, we were able to generate a grid of pinhole camera images a constant offset away from each other which serves as the sub-aperture images for the computational refocusing stage. </p>
+<div align="middle">
+  <table style="width=100%">
+    <col width="20%">
+    <tr>
+      <td><img src="draken/lfi00.png" align="middle" width="100px"/></td>
+      <td><img src="draken/lfi10.png" align="middle" width="100px"/></td>
+      <td><img src="draken/lfi20.png" align="middle" width="100px"/></td>
+      <td><img src="draken/lfi30.png" align="middle" width="100px"/></td>
+      <td><img src="draken/lfi40.png" align="middle" width="100px"/></td>
+    </tr>
+    <tr>
+      <td><img src="draken/lfi01.png" align="middle" width="100px"/></td>
+      <td><img src="draken/lfi11.png" align="middle" width="100px"/></td>
+      <td><img src="draken/lfi21.png" align="middle" width="100px"/></td>
+      <td><img src="draken/lfi31.png" align="middle" width="100px"/></td>
+      <td><img src="draken/lfi41.png" align="middle" width="100px"/></td>
+    </tr>
+    <tr>
+      <td><img src="draken/lfi02.png" align="middle" width="100px"/></td>
+      <td><img src="draken/lfi12.png" align="middle" width="100px"/></td>
+      <td><img src="draken/lfi22.png" align="middle" width="100px"/></td>
+      <td><img src="draken/lfi32.png" align="middle" width="100px"/></td>
+      <td><img src="draken/lfi42.png" align="middle" width="100px"/></td>
+    </tr>
+    <tr>
+      <td><img src="draken/lfi03.png" align="middle" width="100px"/></td>
+      <td><img src="draken/lfi13.png" align="middle" width="100px"/></td>
+      <td><img src="draken/lfi23.png" align="middle" width="100px"/></td>
+      <td><img src="draken/lfi33.png" align="middle" width="100px"/></td>
+      <td><img src="draken/lfi43.png" align="middle" width="100px"/></td>
+    </tr>
+    <tr>
+      <td><img src="draken/lfi04.png" align="middle" width="100px"/></td>
+      <td><img src="draken/lfi14.png" align="middle" width="100px"/></td>
+      <td><img src="draken/lfi24.png" align="middle" width="100px"/></td>
+      <td><img src="draken/lfi34.png" align="middle" width="100px"/></td>
+      <td><img src="draken/lfi44.png" align="middle" width="100px"/></td>
+    </tr>
+  </table>
+</div>
+
+
+<h3 align="middle">Refocusing Sub-aperture Images:</h3>
+
+<p>We created a java project that allowed us to refocus the .png images that were created from the modified project 3 code. The paper<sup>[1]</sup> we read on the light field cameras shows that computational refocusing given sub-aperture images is simply shifting the images and averaging their pixel values. The program calculates the ‘center’ of the grid, and moves the sub-aperture images towards the center proportional to their distance away from the center and the refocus distance. </p>
+
+
+
+<h3 align="middle">Building a GUI for Result Comparison:</h3>
+
+<p>In our java project, we added GUI functionality that would allow us to toggle the distance between the sensor and the lens. “0” refers to our image focused at infinity, and an increasing number refers to an increased distance between the lens and the sensor plane. This GUI is much more user friendly and renders faster between changes in distance compared to our Project 3 GUI.</p>
+<div align="middle">
+<iframe src="https://drive.google.com/file/d/1jgaGyu5S_Ev_0dS6s-HyDv7ytyV8E1O8/preview" width="640" height="480"></iframe></div>
+
+<h2 align="middle">Reflections and Updates</h2>
+
+<p>We achieved the checkpoints that we set for ourselves in our project proposal. From now on, we will start working on our final presentation/deliverables and project report, making sure to use images that would highlight our accomplishments the best (i.e. use a wider range of images) and include an analysis of our results.
+</p>
+
+<h4 align="left">Sources</h4>
+<p>[1]  Digital Light Field Photography Thesis, Ren Ng, pg 54.</p>
+
+</div>
+</body>
+</html>
