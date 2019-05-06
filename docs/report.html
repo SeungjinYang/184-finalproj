@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<style>
+  body {
+    padding: 100px;
+    width: 1000px;
+    margin: auto;
+    text-align: left;
+    font-weight: 300;
+    font-family: 'Open Sans', sans-serif;
+    color: #121212;
+  }
+  h1, h2, h3, h4 {
+    font-family: 'Source Sans Pro', sans-serif;
+  }
+</style>
+<title>CS 184 Final Report</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Sans+Pro" rel="stylesheet">
+</head>
+
+
+<body>
+
+<h1 align="middle">CS 184: Computer Graphics and Imaging, Spring 2019</h1>
+<h1 align="middle">Final Project: Light Field Camera</h1>
+<h1 align="middle">Final Report Webpage</h1>
+<h2 align="middle">Amanda Nicole, Brendan Sweeney, Seung Jin Yang</h2>
+
+<br>
+
+<div>
+
+<h1>Abstract</h1>
+
+<p>In this final project, we extended the project 3 retracer, implementing light field camera to allow post-render focusing of images. We first generated a sub-aperture images, a grid of pinhole camera renderings taken from constant lateral offset from each other. Then, we created an interactive refocuser that takes the sub-aperture images from part 1 and uses shift-and-add algorithm to display it in a GUI with an ability to toggle refocus distance.</p>
+<br>
+<h1>Technical Approach</h1>
+
+<h3>•Generating sub-aperture images with a camera grid:</h3>
+<p>As we were implementing a light field camera in a virtual rendering program, we decided to use the multi-camera array model instead of micron lens model. The multi-camera array model uses the fact that each sub-aperture image is equivalent to an image taken from a lateral offset away from the center of the lens, and generates sub-aperture images by taking multiple renderings of the scene with a pinhole camera taken from a grid of lateral offsets.[cite] We chose this approach in our project because:</p>
+<p>a) The raytracer program already supports pinhole camera model, so generating images that are perfectly in focus is not a challenge.</p>
+<p>b) We don't need to worry about cross-talk or physical limitation of microns model.</p>
+<p>c) Each sub-aperture image can be rendered separately, allowing us to exploit parallelism (render multiple sub-aperture images at once on multiple machines)</p>
+<p>d) The output result, multiple png files, is easier to work with than any custom format we might come up with when using micro lens model.</p>
+<p>We implemented the multi-camera array by modifying project 3 code to take in additional arguments that will shift the camera position relative to the camera setting file argument. Then, we ran the program multiple times using arguments that will generate a grid of images a constant offer from each other.</p>
+<h3>•Post-rendering refocusing with shift-and-add algorithm:</h3>
+
+<p>The paper[1] we read on computational refocusing gives us an equation,</p>
+
+<div align = "middle">
+  <img src = "equation.png" width = 500px>
+</div>
+<p>which shows that computational refocusing given sub-aperture images is equivalent to shifting the images and averaging their pixel values. The rate at which images are shifted is directly proportional to the distance from the center of the lens, and more shift will result in closer focus. We made a simple interactive program which calculates the distance of each sub-aperture image's camera position from the ‘center’ of the image grid, and moves the sub-aperture images towards the center appropriately. This program is capable of focusing an image at an arbitrary distance given the collection of sub-aperture images.
+</p>
+<br>
+<h1>Results</h1>
+<h3>•Sub-aperture images:</h3>
+
+
+<h3>•Post-refocus rendering:</h3>
+
+<br>
+<h1>Problems Encountered</h1>
+
+<p>TODO problems</p>
+<br>
+<h1>Lessons Learned</h1>
+
+<p>TODO lessons</p>
+<br>
+<h1>Sources</h1>
+<p>[1] <a href="https://stanford.edu/class/ee367/reading/Ren%20Ng-thesis%20Lytro.pdf">Digital Light Field Photography Thesis, Ren Ng.</a></p>
+<p>TODO add more sources</p>
+
+<br>
+<h1>Contributions</h1>
+<p>Brendan Sweeney modified the project 3 code to be able to generate a grid of sub-aperture images.</p>
+<p>Seung Jin Yang, with help of Amanda Awan, wrote the interactive refocuser.</p>
+<p>Seung Jin Yang and Amanda Awan created the final report website.</p>
+<p>Amanda Awan created the final project video.</p>
+
+</div>
+</body>
+</html>
