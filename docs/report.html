@@ -40,11 +40,13 @@
 
 <h3>•Generating sub-aperture images with a camera grid:</h3>
 <p>As we were implementing a light field camera in a virtual rendering program, we decided to use the multi-camera array model instead of micron lens model. The multi-camera array model uses the fact that each sub-aperture image is equivalent to an image taken from a lateral offset away from the center of the lens, and generates sub-aperture images by taking multiple renderings of the scene with a pinhole camera taken from a grid of lateral offsets. We chose this approach in our project because:</p>
-<p>a) The raytracer program already supports pinhole camera model, so generating images that are perfectly in focus is not a challenge.</p>
+<p>a) The raytracer program already supports pinhole camera model, so generating images that are perfectly in focus is straightforward.</p>
 <p>b) We don't need to worry about cross-talk or physical limitation of microns model.</p>
-<p>c) Each sub-aperture image can be rendered separately, allowing us to exploit parallelism (render multiple sub-aperture images at once on multiple machines)</p>
-<p>d) The output result, multiple png files, is easier to work with than any custom format we might come up with when using micro lens model.</p>
-<p>We implemented the multi-camera array by modifying project 3 code to take in additional arguments that will shift the camera position relative to the camera setting file argument. Then, we ran the program multiple times using arguments that will generate a grid of images a constant offer from each other.</p>
+<p>c) The output result, multiple png files, is easier to work with than any custom format we might come up with when using micro lens model.</p>
+<p>We implemented the multi-camera array by modifying project 3 code to take in additional arguments that control the number of and shifts required to produce the multi-camera array.</p>
+<p>When rendering, the camera was offset to each of the positions and the rendering ran with a pinhole model to produce each sub-aperture image.</p>
+
+
 <h3>•Post-rendering refocusing with shift-and-add algorithm:</h3>
 
 <p>The paper[1] we read on computational refocusing gives us an equation,</p>
@@ -57,6 +59,8 @@
 
 <h3>•Problems Encountered:</h3>
 <p>We first thought of writing a single program that will handle everything from rendering to interactive display, similar to interactive mode in project 3. After working on it for a while, we decided it was a bad idea because there was a significant change required in code, and the program couldn't store intermediate results so we would have to run the code for hours before any demo could be made. We decided divide the project into two programs, one to generate sub-aperture images and one to refocus images. This allowed us to do the time-intensive part of the project (generating sub-aperture images that takes hours) and save its results, so refocusing demo can be done quickly.</p>
+<p>An issue encountered and overcome when generating sub-aperture images was the need to render multiple images without user input.</p>
+<p>Awaiting the completition of prior renderings was resolved by liberal use of the volatile keyword to trick the optimiser into continously check the other threads' progress.</p>
 
 <h3>•Lessons Learned:</h3>
 <p>While implementing the light field camera, we came to understand that the principle of light field camera relate closely to the notion of parallax. Take two sub-aperture images, for example. The objects far away will stay in relatively same positions in the image, while the objects close by will be further apart across the images. Therefore, averaging the images without shifting will produce an image such that the far object is overlaid correctly, while the close object is dispersed. Similarly, shifting the images toward the center before averaging will cause close objects to be overlaid correctly and vice versa. </p>
